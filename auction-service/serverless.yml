@@ -11,6 +11,25 @@ provider:
   memorySize: 256
   stage: ${opt:stage, 'dev'}
   region: us-east-2
+
+resources:
+  # Cloudformation, AWS specific
+  Resources:
+    # logical ID
+    AuctionsTable:
+        Type: AWS::DynamoDB::Table
+        Properties:
+          TableName: AuctionsTable
+          BillingMode: PAY_PER_REQUEST
+          AttributeDefinitions:
+            - AttributeName: id
+              # S stands for string
+              AttributeType: S
+          KeySchema:
+            # is the partition key
+            - AttributeName: id
+              KeyType: HASH
+    
   
 functions:
   createAuction:
