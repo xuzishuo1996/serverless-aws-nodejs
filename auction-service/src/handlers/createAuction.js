@@ -18,7 +18,8 @@ async function createAuction(event, context) {
   // await and promise are the JS ES6 properties
   await dynamodb.put({
     // first letters of properties have to be upper letters
-    TableName: 'AuctionsTable',
+    // process.env is how to get env variables in JS
+    TableName: process.env.AUCTIONS_TABLE_NAME,
     Item: auction,
   }).promise();
 
