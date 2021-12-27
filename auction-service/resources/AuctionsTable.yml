@@ -6,7 +6,27 @@ AuctionsTable:
     BillingMode: PAY_PER_REQUEST
     AttributeDefinitions:
       - AttributeName: id
+        # S represents string
+        AttributeType: S
+      - AttributeName: status
+        AttributeType: S
+      - AttributeName: endingAt
         AttributeType: S
     KeySchema:
       - AttributeName: id
         KeyType: HASH
+    GlobalSecondaryIndexes:
+      - IndexName: statusAndEndDate
+        KeySchema:
+          # partition key
+          - AttributeName: status
+            KeyType: HASH
+          # sort key
+          - AttributeName: endingAt
+            KeyType: RANGE
+        Projection:
+          ProjectionType: ALL
+        # ProvisionedThroughput:
+        #   ReadCapacityUnits: 1
+        #   WriteCapacityUnits: 1
+        
