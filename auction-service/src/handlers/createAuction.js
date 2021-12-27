@@ -33,7 +33,6 @@ async function createAuction(event, context) {
     throw new createError.InternalServerError(error);
   }
 
-
   return {
     statusCode: 201,
     body: JSON.stringify({auction}),
