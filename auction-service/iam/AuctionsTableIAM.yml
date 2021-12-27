@@ -6,8 +6,12 @@ AuctionsTableIAM:
     - dynamodb:Scan
     - dynamodb:GetItem
     - dynamodb:UpdateItem
+    - dynamodb:Query
   Resource:
-    # Amazon Resource Name (ARN)
+    # Amazon Resource Name (ARN) for AuctionsTable
     # - arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/AuctionsTable
     # self refers to serverless.yml
     - ${self:custom.AuctionsTable.arn}
+    # (ARN) for secondary index
+    # - ${self:custom.AuctionsTable.arn}/index/statusAndEndDate
+    - !Join ['/', ['${self:custom.AuctionsTable.arn}', 'index', 'statusAndEndDate']]
