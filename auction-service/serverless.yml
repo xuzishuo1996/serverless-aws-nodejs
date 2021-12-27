@@ -30,6 +30,7 @@ functions:
       - http:
           method: POST
           path: /auction
+          authorizer: ${self:custom.authorizer}
 
   getAuctions:
     handler: src/handlers/getAuctions.handler
@@ -37,6 +38,7 @@ functions:
       - http:
           method: GET
           path: /auctions
+          authorizer: ${self:custom.authorizer}
 
   getAuction:
     handler: src/handlers/getAuction.handler
@@ -44,6 +46,7 @@ functions:
       - http:
           method: GET
           path: /auction/{id}
+          authorizer: ${self:custom.authorizer}
 
   placeBid:
     handler: src/handlers/placeBid.handler
@@ -51,6 +54,7 @@ functions:
       - http:
           method: PATCH
           path: /auction/{id}/bid
+          authorizer: ${self:custom.authorizer}
 
   processAuctions:
     handler: src/handlers/processAuctions.handler
@@ -59,6 +63,9 @@ functions:
     #   - schedule: rate(1 minute)
 
 custom:
+  # could use #{para} because of serverless-pseudo-parameters plugin
+  # ${self:provider.stage} is the serverless framework variable in this yml file
+  authorizer: arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:auth-service-${self:provider.stage}-auth
   AuctionsTable:
     # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-dynamodb-table.html, Return Values part
     name: !Ref AuctionsTable

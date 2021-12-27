@@ -43,8 +43,8 @@ async function placeBid(event, context) {
 
 	return {
 		statusCode: 200,
-    	body: JSON.stringify({updatedAuction}),
-  	};
+		body: JSON.stringify({updatedAuction}),
+	};
 }
 
 export const handler = commonMiddleware(placeBid)
