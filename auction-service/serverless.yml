@@ -45,6 +45,13 @@ functions:
           method: GET
           path: /auction/{id}
 
+  placeBid:
+    handler: src/handlers/placeBid.handler
+    events:
+      - http:
+          method: PATCH
+          path: /auction/{id}/bid
+
 custom:
   AuctionsTable:
     # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-dynamodb-table.html, Return Values part
