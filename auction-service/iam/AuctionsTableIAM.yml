@@ -1,8 +1,10 @@
 AuctionsTableIAM:
   Effect: Allow
   Action:
+    # or else "Missing Authentication Token"
     - dynamodb:PutItem
     - dynamodb:Scan
+    - dynamodb:GetItem
   Resource:
     # Amazon Resource Name (ARN)
     # - arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/AuctionsTable
