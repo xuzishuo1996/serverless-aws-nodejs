@@ -37,10 +37,10 @@ async function getAuctions(event, context) {
 		throw new createError.InternalServerError(error);
 	}
 
-  return {
-    statusCode: 200,
-    body: JSON.stringify({auctions}),
-  };
+	return {
+		statusCode: 200,
+		body: JSON.stringify({auctions}),
+	};
 }
 
 export const handler = commonMiddleware(getAuctions)

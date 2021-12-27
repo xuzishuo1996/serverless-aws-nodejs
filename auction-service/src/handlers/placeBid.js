@@ -2,6 +2,8 @@ import AWS from 'aws-sdk';
 import commonMiddleware from '../lib/commonMiddleware';	// default export do not need the {}
 import createError from 'http-errors';
 import { getAuctionById } from './getAuction';
+import validator from '@middy/validator';
+import placeBidSchema from '../lib/schemas/placeBidSchema';
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 
@@ -39,10 +41,18 @@ async function placeBid(event, context) {
 		throw new createError.InternalServerError(error);
 	}
 
-  return {
-    statusCode: 200,
-    body: JSON.stringify({updatedAuction}),
-  };
+	return {
+		statusCode: 200,
+    	body: JSON.stringify({updatedAuction}),
+  	};
 }
 
-export const handler = commonMiddleware(placeBid);
+export const handler = commonMiddleware(placeBid)
+	.use(
+		validator({
+			inputSchema: placeBidSchema,
+			ajvOptions: {
+				strict: false,
+			},
+		})
+	);
