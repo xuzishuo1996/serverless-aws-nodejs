@@ -1,8 +1,20 @@
+import createError from 'http-errors';
+import { closeAuction } from '../lib/closeAuction';
 import { getEndedAuctions } from '../lib/getEndedAuctions';
 
 async function processAuctions(event, context) {
-    const auctionsToClose = await getEndedAuctions();
-    console.log(auctionsToClose);
+    try {
+        const auctionsToClose = await getEndedAuctions();
+        const closePromises = auctionsToClose.map(auction => closeAuction(auction));
+        await Promise.all(closePromises);
+
+        // could return in normal object structure instead of HTTP strucuture
+        // because this function is not invoked by the API Gateway
+        return { closed: closePromises.length };
+    } catch (error) {
+        console.error(error);
+        throw new createError.InternalServerError(error);
+    }
 }
 
 export const handler = processAuctions;
