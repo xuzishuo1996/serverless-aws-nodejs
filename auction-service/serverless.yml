@@ -52,6 +52,12 @@ functions:
           method: PATCH
           path: /auction/{id}/bid
 
+  processAuctions:
+    handler: src/handlers/processAuctions.handler
+    # events:
+    #   # makes the lambda function run every 1 minute
+    #   - schedule: rate(1 minute)
+
 custom:
   AuctionsTable:
     # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-dynamodb-table.html, Return Values part
