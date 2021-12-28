@@ -1,0 +1,20 @@
+AuctionsBucket:
+  Type: AWS::S3::Bucket
+  Properties:
+    BucketName: ${self:custom.AuctionsBucket.name}
+
+# By default, S3 buckets are blocked from the public, so we need policies
+AuctionsBucketPolicy:
+  Type: AWS::S3::BucketPolicy
+  Properties:
+    Bucket: !Ref AuctionsBucket
+    PolicyDocument:
+      Statement:
+        - Sid: PublicRead
+          Effect: Allow
+          # any items
+          Principal: '*'
+          Action:
+            # view pictures
+            - s3:GetObject
+          Resource: arn:aws:s3:::${self:custom.AuctionsBucket.name}/*
