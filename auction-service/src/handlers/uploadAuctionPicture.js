@@ -4,6 +4,7 @@ import { setAuctionPictureUrl } from '../lib/setAuctionPictureUrl';
 import createError from 'http-errors';
 import middy from '@middy/core';
 import httpErrorHandler from '@middy/http-error-handler';
+import cors from '@middy/http-cors';
 
 export async function uploadAuctionPicture(event) {
   const { id } = event.pathParameters;
@@ -35,4 +36,5 @@ export async function uploadAuctionPicture(event) {
 }
 
 export const handler = middy(uploadAuctionPicture)
-    .use(httpErrorHandler());
+    .use(httpErrorHandler())
+    .use(cors());
