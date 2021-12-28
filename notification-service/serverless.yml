@@ -11,11 +11,11 @@ provider:
   memorySize: 256
   region: us-east-2
   stage: ${opt:stage, 'dev'}
+  iamRoleStatements:
+    # :SendMailIAM - need to refer to SendMailIAM object in SendMailIAM.yml
+    ${file(iam/SendMailIAM.yml):SendMailIAM}
   
 functions:
-  hello:
-    handler: src/handlers/hello.handler
-    events:
-      - http:
-          method: GET
-          path: /hello
+  sendMail:
+    handler: src/handlers/sendMail.handler
+
